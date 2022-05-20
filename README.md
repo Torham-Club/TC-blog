@@ -3,11 +3,11 @@ A blog where users can sign up and have their own posts and followers
 
 
 Main works and features :
-- [ ] Create backend database models
-- [ ] Create API for Auth in blog
+- [X] Create backend database models
+- [X] Create API for Auth in blog
 - [ ] Create API for CRUD in blog posts
 - [ ] Dockerize the project
-- [ ] Making documents with Swagger
+- [X] Making documents with Swagger
 - [ ] Release the initial version
 
 After the release of the initial version :
