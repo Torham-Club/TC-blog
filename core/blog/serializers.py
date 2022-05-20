@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
+from blog.models import UsersAdditionalInfo
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -20,3 +21,14 @@ class UpdateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('email', 'username', 'first_name', 'last_name')
+
+
+class UsersAdditionalInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UsersAdditionalInfo
+        fields = ('user', 'bio', 'profile_picture')
+
+        def create(self, validated_data):
+            user_info = UsersAdditionalInfo(**validated_data)
+            user_info.save()
+            return user_info

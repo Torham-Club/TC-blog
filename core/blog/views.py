@@ -1,9 +1,8 @@
 from django.contrib.auth.models import User
-from django.http import Http404
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework import generics
-from blog.serializers import UserSerializer, UpdateUserSerializer
+from blog.serializers import UserSerializer, UpdateUserSerializer, UsersAdditionalInfoSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
 
@@ -21,10 +20,7 @@ class UserUpdate(generics.GenericAPIView):
     serializer_class = UpdateUserSerializer
 
     def get_object(self, user_pk):
-        try:
-            return User.objects.get(pk=user_pk)
-        except User.DoesNotExist:
-            raise Http404
+        return get_object_or_404(User, pk=user_pk)
 
     def put(self, request):
 
@@ -37,3 +33,20 @@ class UserUpdate(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, 200)
+
+
+class CreateUsersAdditionalInfo(generics.GenericAPIView):
+
+    serializer_class = UsersAdditionalInfoSerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+
+        user_pk = request.user.pk
+        req_data = request.data
+        req_data["user"] = user_pk
+
+        serializer = UsersAdditionalInfoSerializer(data=req_data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
