@@ -1,4 +1,5 @@
-from django.shortcuts import render
-
+from django.http import HttpResponse
 def index(req):
-	return render(req,'index.html')
+	return HttpResponse("Frontend developer should add index page")
+	# Home page should be add
+	# Just added routings
