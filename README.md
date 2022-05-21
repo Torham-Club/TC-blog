@@ -10,7 +10,7 @@ Main works and features :
 - [ ] Create an API to update posts
 - [X] Create an API to update additional information
 - [ ] Create a comments database model
-- [ ] Create a database model of followers and following
+- [X] Create a database model of followers and following
 - [ ] Create an API to leave a comment
 - [ ] Create an API to follow and unfollow
 - [ ] Dockerize the project
