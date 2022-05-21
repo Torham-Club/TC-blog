@@ -8,16 +8,16 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 schema_view = get_schema_view(
-    openapi.Info(
-        title="TC Blog APIs",
-        default_version='v1',
-        description="A blog where users can sign up and have their own posts and followers ",
-        terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="TorhamDev@gmail.com"),
-        license=openapi.License(name="MIT License"),
+   openapi.Info(
+      title="TC Blog APIs",
+      default_version='v1',
+      description="A blog where users can sign up and have their own posts and followers ",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="TorhamDev@gmail.com"),
+      license=openapi.License(name="MIT License"),
     ),
-    public=True,
-    permission_classes=[permissions.AllowAny],
+   public=True,
+   permission_classes=[permissions.AllowAny],
 )
 
 
