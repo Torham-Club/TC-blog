@@ -8,7 +8,7 @@ Main works and features :
 - [X] Making documents with Swagger
 - [ ] Create an API for creating posts
 - [ ] Create an API to update posts
-- [ ] Create an API to update additional information
+- [X] Create an API to update additional information
 - [ ] Create a comments database model
 - [ ] Create a database model of followers and following
 - [ ] Create an API to leave a comment
