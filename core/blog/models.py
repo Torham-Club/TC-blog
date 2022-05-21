@@ -1,12 +1,27 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+
+
+class FollowersAndFollowing(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    follwers = models.ManyToManyField(
+        get_user_model(),
+        blank=True,
+        related_name='follwers'
+    )
+    following = models.ManyToManyField(
+        get_user_model(),
+        blank=True,
+        related_name='following'
+    )
 
 
 class UsersAdditionalInfo(models.Model):
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
-        related_name="info"
+        related_name='info'
     )
 
     bio = models.CharField(max_length=500, null=True, blank=True)
@@ -20,7 +35,7 @@ class Posts(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="posts"
+        related_name='posts'
     )
 
     title = models.CharField(max_length=300)
