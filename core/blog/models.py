@@ -24,6 +24,7 @@ class Posts(models.Model):
     )
 
     title = models.CharField(max_length=300)
+    slug = models.SlugField(null=True)
     content = models.TextField()
     like = models.IntegerField(default=0)
     dislike = models.IntegerField(default=0)
