@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from blog.models import UsersAdditionalInfo
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import generics
@@ -35,10 +36,13 @@ class UserUpdate(generics.GenericAPIView):
         return Response(serializer.data, 200)
 
 
-class CreateUsersAdditionalInfo(generics.GenericAPIView):
+class CreateAndUpdateUsersAdditionalInfo(generics.GenericAPIView):
 
     serializer_class = UsersAdditionalInfoSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_object(self, user_pk):
+        return get_object_or_404(UsersAdditionalInfo, user__pk=user_pk)
 
     def post(self, request):
 
@@ -49,4 +53,19 @@ class CreateUsersAdditionalInfo(generics.GenericAPIView):
         serializer = UsersAdditionalInfoSerializer(data=req_data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data)
+        return Response(serializer.data, 201)
+
+    def put(self, request):
+
+        user_pk = request.user.pk
+        req_data = request.data
+        req_data["user"] = user_pk
+
+        user_data = self.get_object(user_pk)
+        serializer = UsersAdditionalInfoSerializer(
+            instance=user_data,
+            data=req_data
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, 200)
