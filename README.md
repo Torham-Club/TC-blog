@@ -13,7 +13,7 @@ Main works and features :
 - [X] Create a database model of followers and following
 - [ ] Create an API to leave a comment
 - [ ] Create an API to follow and unfollow
-- [ ] Dockerize the project
+- [X] Dockerize the project
 - [ ] Release the initial version
 
 After the release of the initial version :
