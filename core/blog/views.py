@@ -13,9 +13,6 @@ from blog.serializers import (
     PostSerializer
 )
 
-from blog.models import Posts
-from blog.serializers import PostSerializer
-
 
 class UserCreate(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -78,7 +75,6 @@ class CreateAndUpdateUsersAdditionalInfo(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, 200)
-
 
 
 class DetailEditRemovePostAPI(generics.RetrieveUpdateDestroyAPIView):    
