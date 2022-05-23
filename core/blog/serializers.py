@@ -34,6 +34,7 @@ class UsersAdditionalInfoSerializer(serializers.ModelSerializer):
             return user_info
 
 
+
 class PostCreateSerializer(serializers.ModelSerializer):
     
     author = serializers.ReadOnlyField(source='author.username')
