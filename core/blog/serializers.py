@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from blog.models import UsersAdditionalInfo
+from blog.models import Posts
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -32,3 +33,9 @@ class UsersAdditionalInfoSerializer(serializers.ModelSerializer):
             user_info = UsersAdditionalInfo(**validated_data)
             user_info.save()
             return user_info
+
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Posts
+        fields = '__all__'

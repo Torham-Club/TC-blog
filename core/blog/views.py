@@ -7,6 +7,9 @@ from blog.serializers import UserSerializer, UpdateUserSerializer, UsersAddition
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
 
+from blog.models import Posts
+from blog.serializers import PostSerializer
+
 
 class UserCreate(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -69,3 +72,9 @@ class CreateAndUpdateUsersAdditionalInfo(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, 200)
+
+
+class CreatePostAPI(generics.CreateAPIView):
+    queryset = Posts.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = (IsAuthenticated, )
