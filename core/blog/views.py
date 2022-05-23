@@ -9,7 +9,8 @@ from blog.serializers import (
     UserSerializer,
     UpdateUserSerializer,
     UsersAdditionalInfoSerializer,
-    PostCreateSerializer
+    PostCreateSerializer,
+    PostSerializer
 )
 
 
@@ -85,3 +86,10 @@ class PostCreate(generics.CreateAPIView):
     # Set the author of the post.
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+
+class PostList(generics.ListAPIView):
+    queryset = Posts.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
+    
