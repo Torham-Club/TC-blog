@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 from django.contrib.auth import get_user_model
 
 
@@ -44,3 +45,10 @@ class Posts(models.Model):
     like = models.IntegerField(default=0)
     dislike = models.IntegerField(default=0)
     views = models.IntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Posts, self).save(*args, **kwargs)
+
+    def __str__(self) -> str:
+        return f"{self.author.username} | {self.title}"
