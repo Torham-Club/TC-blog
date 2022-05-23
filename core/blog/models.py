@@ -39,15 +39,15 @@ class Posts(models.Model):
         related_name='posts'
     )
 
-    title = models.CharField(max_length=300)
-    slug = models.SlugField(null=True)
+    title = models.CharField(max_length=300, unique=True)
+    slug = models.SlugField(blank=True)
     content = models.TextField()
     like = models.IntegerField(default=0)
     dislike = models.IntegerField(default=0)
     views = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
+        self.slug = slugify(self.title, allow_unicode=True)
         super(Posts, self).save(*args, **kwargs)
 
     def __str__(self) -> str:
