@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from blog.models import UsersAdditionalInfo
-from blog.models import Posts
+from blog.models import UsersAdditionalInfo, Posts
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -35,7 +34,22 @@ class UsersAdditionalInfoSerializer(serializers.ModelSerializer):
             return user_info
 
 
-class PostSerializer(serializers.ModelSerializer):
+
+class PostCreateSerializer(serializers.ModelSerializer):
+    
+    author = serializers.ReadOnlyField(source='author.username')
     class Meta:
         model = Posts
-        fields = '__all__'
+        fields = ('author', 'title', 'slug', 'content', 'like', 'dislike', 'views')
+
+        def create(self, validated_data):
+            post = Posts(**validated_data)
+            post.save()
+            return post
+
+class PostSerializer(serializers.ModelSerializer):
+    
+    author = serializers.ReadOnlyField(source='author.username')
+    class Meta:
+        model = Posts
+        fields = ('author', 'title', 'slug', 'content', 'like', 'dislike', 'views')
