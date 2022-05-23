@@ -1,12 +1,13 @@
+from django import dispatch
 from django.contrib.auth.models import User
 from blog.models import UsersAdditionalInfo
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import generics
-from blog.serializers import UserSerializer, UpdateUserSerializer, UsersAdditionalInfoSerializer
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from blog.models import Posts
+from blog.serializers import PostCreateSerializer, UserSerializer, UpdateUserSerializer, UsersAdditionalInfoSerializer
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.throttling import UserRateThrottle
-
 
 class UserCreate(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -53,19 +54,19 @@ class CreateAndUpdateUsersAdditionalInfo(generics.GenericAPIView):
         serializer = UsersAdditionalInfoSerializer(data=req_data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data, 201)
+        return Response(serializer.data)
 
-    def put(self, request):
 
-        user_pk = request.user.pk
-        req_data = request.data
-        req_data["user"] = user_pk
+class PostCreate(generics.CreateAPIView):
 
-        user_data = self.get_object(user_pk)
-        serializer = UsersAdditionalInfoSerializer(
-            instance=user_data,
-            data=req_data
-        )
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, 200)
+    queryset = Posts.objects.all()
+    serializer_class = PostCreateSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+
+
+
+
