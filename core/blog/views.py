@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from blog.models import UsersAdditionalInfo, Posts
+from blog.models import UsersAdditionalInfo, Posts, Comment
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import generics
@@ -10,7 +10,8 @@ from blog.serializers import (
     UpdateUserSerializer,
     UsersAdditionalInfoSerializer,
     PostCreateSerializer,
-    PostSerializer
+    PostSerializer,
+    CommentSerializer
 )
 
 
@@ -98,3 +99,9 @@ class PostList(generics.ListAPIView):
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
     
+
+class CommentCreate(generics.CreateAPIView):
+    
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [AllowAny]
