@@ -39,7 +39,7 @@ class Posts(models.Model):
         related_name='posts'
     )
 
-    title = models.CharField(max_length=300, unique=True)
+    title = models.CharField(max_length=300)
     slug = models.SlugField(blank=True)
     content = models.TextField()
     like = models.IntegerField(default=0)
