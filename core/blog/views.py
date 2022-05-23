@@ -1,13 +1,17 @@
-from django import dispatch
 from django.contrib.auth.models import User
-from blog.models import UsersAdditionalInfo
+from blog.models import UsersAdditionalInfo, Posts
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import generics
-from blog.models import Posts
-from blog.serializers import PostCreateSerializer, UserSerializer, UpdateUserSerializer, UsersAdditionalInfoSerializer
-from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
+from blog.serializers import (
+    UserSerializer,
+    UpdateUserSerializer,
+    UsersAdditionalInfoSerializer,
+    PostCreateSerializer
+)
+
 
 class UserCreate(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -54,7 +58,22 @@ class CreateAndUpdateUsersAdditionalInfo(generics.GenericAPIView):
         serializer = UsersAdditionalInfoSerializer(data=req_data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data)
+        return Response(serializer.data, 201)
+
+    def put(self, request):
+
+        user_pk = request.user.pk
+        req_data = request.data
+        req_data["user"] = user_pk
+
+        user_data = self.get_object(user_pk)
+        serializer = UsersAdditionalInfoSerializer(
+            instance=user_data,
+            data=req_data
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, 200)
 
 
 class PostCreate(generics.CreateAPIView):
@@ -63,10 +82,6 @@ class PostCreate(generics.CreateAPIView):
     serializer_class = PostCreateSerializer
     permission_classes = [IsAuthenticated]
 
+    # Set the author of the post.
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
-
-
-
-
-
