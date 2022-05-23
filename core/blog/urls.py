@@ -7,4 +7,5 @@ urlpatterns = [
     path('account/set/additional', views.CreateAndUpdateUsersAdditionalInfo.as_view()),
     # posts urls
     path('post/new/', views.CreatePostAPI.as_view()),
+    path('post/detail/<int:pk>/', views.DetailEditRemovePostAPI.as_view()),
 ]

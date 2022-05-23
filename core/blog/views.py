@@ -78,3 +78,8 @@ class CreatePostAPI(generics.CreateAPIView):
     queryset = Posts.objects.all()
     serializer_class = PostSerializer
     permission_classes = (IsAuthenticated, )
+
+class DetailEditRemovePostAPI(generics.RetrieveUpdateDestroyAPIView):    
+    queryset = Posts.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = (IsAuthenticated, )
