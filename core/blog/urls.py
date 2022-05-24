@@ -8,7 +8,7 @@ urlpatterns = [
     path('post/detail/<int:pk>/', views.DetailEditRemovePostAPI.as_view()),
     path('posts/create', views.PostCreate.as_view(), name='post_create_api'),
     path('posts/list', views.PostList.as_view()),
-    path('post/<int:pk>/comment/', views.PostList.as_view()),
+    path('post/comment/', views.CommentCreate.as_view(), name='comment_create_api'),
 
 
 ]

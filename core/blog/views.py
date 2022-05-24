@@ -105,3 +105,5 @@ class CommentCreate(generics.CreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [AllowAny]
+
+
